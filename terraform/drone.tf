@@ -24,6 +24,8 @@ resource "aws_instance" "drone" {
     instance_type = "t2.micro"
     vpc_security_group_ids = ["sg-095bc4bd27480a155"]
     subnet_id = "subnet-018fd2db4fdea3d70"
+    associate_public_ip_address = true
+    key_name = "test-vpc"
 
     tags = {
         Name = "Drone"
