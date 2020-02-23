@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: elixir:1.5
+  image: elixir:latest
   commands:
   - cd ./remote_coach
   - mix local.rebar --force
