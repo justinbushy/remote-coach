@@ -1,6 +1,9 @@
 kind: pipeline
 name: default
 
+workspace:
+  path: /remote_coach
+
 steps:
 - name: test
   image: elixir:1.5
