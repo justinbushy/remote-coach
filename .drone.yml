@@ -23,5 +23,5 @@ services:
   - name: postgresdb
     image: postgres
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=remote_coach_dev
+      POSTGRES_USER: postgres
+      POSTGRES_DB: remote_coach_dev
