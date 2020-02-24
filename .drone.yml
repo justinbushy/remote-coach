@@ -10,3 +10,19 @@ steps:
   - mix local.hex --force
   - mix deps.get
   - mix test
+  environment:
+    - PGUSER=postgres
+    - PGDATABASE=remote_coach_dev
+    - PGPASSWORD=postgres
+    - PGPORT=5432
+    - PGHOST=postgresdb
+
+
+
+services:
+  database:
+    name: postgresdb
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=remote_coach_dev
