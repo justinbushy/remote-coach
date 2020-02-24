@@ -15,7 +15,7 @@ steps:
     PGDATABASE: remote_coach_dev
     PGPASSWORD: postgres
     PGPORT: 5432
-    PGHOST: postgresdb
+    PGHOST: database
 
 
 
