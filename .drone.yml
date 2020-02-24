@@ -11,11 +11,11 @@ steps:
   - mix deps.get
   - mix test
   environment:
-    - PGUSER=postgres
-    - PGDATABASE=remote_coach_dev
-    - PGPASSWORD=postgres
-    - PGPORT=5432
-    - PGHOST=postgresdb
+    PGUSER: postgres
+    PGDATABASE: remote_coach_dev
+    PGPASSWORD: postgres
+    PGPORT: 5432
+    PGHOST: postgresdb
 
 
 
