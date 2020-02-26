@@ -16,8 +16,11 @@ steps:
     PGPASSWORD: postgres
     PGPORT: 5432
     PGHOST: database
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0e8ffd9... use env vars for phoenix test environment
 
 services:
   - name: database
