@@ -1,0 +1,64 @@
+- hosts: all
+  remote_user: ubuntu
+  become: true
+  become_method: sudo
+  vars_files:
+    - vars/defaults.yml
+
+  tasks:
+
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'gnupg-agent', 'software-properties-common', 'python3-pip']
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+  
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: run drone server
+      docker_container:
+        name: drone-server
+        image: "drone/drone:1"
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - "/var/lib/drone:/data"
+        env:
+            DRONE_GITHUB_CLIENT_ID: "{{ DRONE_GITHUB_CLIENT_ID }}"
+            DRONE_GITHUB_CLIENT_SECRET: "{{ DRONE_GITHUB_CLIENT_SECRET }}"
+            DRONE_RPC_SECRET: "{{ DRONE_RPC_SECRET }}"
+            DRONE_SERVER_HOST: "{{ DRONE_SERVER_HOST }}"
+            DRONE_SERVER_PROTO: "{{ DRONE_SERVER_PROTO }}"
+            DRONE_USER_CREATE: username:justinbushy,admin:true
+
+    - name: run drone runner
+      docker_container:
+        name: drone-runner
+        image: "drone/drone-runner-docker:1"
+        state: started
+        restart_policy: always
+        ports:
+            - "3000:3000"
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        env:
+            DRONE_RPC_PROTO: "{{ DRONE_SERVER_PROTO }}"
+            DRONE_RPC_HOST: "{{ DRONE_SERVER_HOST }}"
+            DRONE_RPC_SECRET: "{{ DRONE_RPC_SECRET }}"
+            DRONE_RUNNER_CAPACITY: "2"      
