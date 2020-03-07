@@ -3,13 +3,11 @@ name: default
 
 steps:
 - name: test
-  image: elixir:latest
+  image: python:3.7
   commands:
-  - cd ./remote_coach
-  - mix local.rebar --force
-  - mix local.hex --force
-  - mix deps.get
-  - mix test
+  - cd ./remotecoach
+  - pip install -r requirements.txt
+  - ./manage.py test
   environment:
     PGUSER: postgres
     PGDATABASE: remote_coach_dev
