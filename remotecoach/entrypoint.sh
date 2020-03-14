@@ -17,4 +17,6 @@ if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
   echo "Database $PGDATABASE created."
 fi
 
+python manage.py migrate
+echo Starting Django Server
 exec python manage.py runserver 0:8000
