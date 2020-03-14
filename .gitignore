@@ -18,4 +18,10 @@ erl_crash.dump
 
 #Python
 */env/
-*/*/__pycache__/
+__pycache__/
+
+#VScode
+.vscode
+
+#various
+**/postgres_env.sh
